@@ -80,3 +80,23 @@ export const deleteProduct = async (id) => {
         throw error;
     }
 };
+
+export const createOrders = async (newProduct, id) => {
+    try {
+        let text = `insert into orders(product_id, user_id, delivey_date) values($1, $2, $3)`
+        let values = []
+        values.push(newProduct["product_id"], id,newProduct["delivery_date"])
+        await client.query(text, values);
+        return true;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+
+export const getOrders = async() =>{
+    let text = 'select * from orders'
+    let data = await client.query(text)
+    return data.rows
+}

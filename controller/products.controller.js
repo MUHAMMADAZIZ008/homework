@@ -75,7 +75,7 @@ export const deleteProductsById = async(req, res, next) =>{
         if(isDelete){
             return res.status(200).send("Deleted")
         }else{
-            return res.status(400).send("Not updated")
+            return res.status(400).send("Not deltete")
         }
     }
     catch(e){

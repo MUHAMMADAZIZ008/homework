@@ -1,6 +1,6 @@
 import express from "express"
 import {config} from "dotenv"
-import { productsRouts, usersRouts } from "./routes/index.js"
+import { ordersRouts, productsRouts, usersRouts } from "./routes/index.js"
 
 config()
 
@@ -11,6 +11,7 @@ app.use(express.json())
 
 app.use("/users", usersRouts)
 app.use("/products", productsRouts)
+app.use("/orders", ordersRouts)
 
 
 
