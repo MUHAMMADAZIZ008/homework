@@ -1,4 +1,5 @@
-import { createProduct, deleteProduct, getALlProduct, updateProduct } from "../database/de_connection.js"
+import { query } from "express"
+import { createProduct, deleteProduct, getALlProduct, searchProduct, updateProduct } from "../database/de_connection.js"
 export const productsControllers = async(req, res, next) =>{
     try{
         let userId = req.id
@@ -27,6 +28,24 @@ export const getAllProductsControllers = async(req, res, next) =>{
         next(e)
     }
 }
+
+
+export const searchProductsControllers = async(req, res, next) =>{
+    try{
+        let {search} = req.query
+        let data = await searchProduct(search)
+        if(data && data.length !== 0){
+            res.status(200).send(data)
+        }else{
+            res.status(404).send("Not fount")
+        }
+    }
+    catch(e){
+        next(e)
+    }
+}
+
+
 
 export const getAllProductsById = async(req, res, next) =>{
     try{

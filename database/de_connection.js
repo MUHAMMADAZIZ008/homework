@@ -51,6 +51,13 @@ export const getALlProduct = async() =>{
     return data.rows
 }
 
+export const searchProduct = async(search) =>{
+    let text = 'select * from products where name = $1'
+    let data = await client.query(text, [search])
+    return data.rows
+}
+
+
 export const updateProduct = async (newProduct, id) => {
     try {
         let text = `update products
@@ -99,4 +106,50 @@ export const getOrders = async() =>{
     let text = 'select * from orders'
     let data = await client.query(text)
     return data.rows
+}
+
+export const getById = async(id) =>{
+    let text = 'select * from orders where id = $1'
+    let data = await client.query(text, [+id])
+    return data.rows
+}
+
+export const deleteByIdOnOredres = async(id) =>{
+    let text = 'delete from orders where id = $1'
+    let data = await client.query(text, [+id])
+    return data
+}
+
+
+
+export const createComment = async (newComment, id) => {
+    try {
+        let text = `insert into comments(comment_text, user_id, product_id) values($1, $2, $3)`
+        let values = []
+        values.push(newComment.text, id, newComment.product_id)
+        await client.query(text, values);
+        return true;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+
+export const getAllComment = async() =>{
+    let text = 'select * from comments'
+    let data = await client.query(text)
+    return data.rows
+}
+
+export const getByIdComment = async(id) =>{
+    let text = 'select * from comments where id = $1'
+    let data = await client.query(text, [id])
+    return data.rows
+}
+
+export const deleteByIdComment = async(id) =>{
+    let text = 'delete from comments where id = $1'
+    let data = await client.query(text, [id])
+    return data
 }
